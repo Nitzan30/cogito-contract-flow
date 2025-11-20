@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Home, FileText, Bell, BarChart3, Settings, FileCheck } from "lucide-react";
+import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Globe } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 interface DashboardLayoutProps {
@@ -9,6 +9,7 @@ interface DashboardLayoutProps {
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navItems = [
     { to: "/", icon: Home, label: "Dashboard" },
+    { to: "/executive-summary", icon: Globe, label: "Executive Summary" },
     { to: "/contracts", icon: FileText, label: "Contracts" },
     { to: "/alerts", icon: Bell, label: "Alerts" },
     { to: "/analytics", icon: BarChart3, label: "Analytics" },
