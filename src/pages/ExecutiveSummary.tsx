@@ -14,6 +14,12 @@ const regions = [
 
 const insights = [
   {
+    title: "High Cost, Low Attendance",
+    description: "VA and Herndon locations showing significant cost inefficiency with high contract values but minimal utilization. Immediate review recommended.",
+    icon: AlertCircle,
+    priority: "high"
+  },
+  {
     title: "Concentration Risk",
     description: "North America represents 34% of total contract value. Consider diversification strategy to mitigate regional dependencies.",
     icon: AlertCircle,
@@ -37,6 +43,11 @@ const insights = [
     icon: Globe,
     priority: "low"
   }
+];
+
+const costVsAttendance = [
+  { location: "VA", contractValue: 850000, attendanceRate: 12, costPerAttendee: 70833 },
+  { location: "Herndon", contractValue: 720000, attendanceRate: 8, costPerAttendee: 90000 },
 ];
 
 export default function ExecutiveSummary() {
@@ -174,6 +185,53 @@ export default function ExecutiveSummary() {
                         {((region.value / wwTotals.value) * 100).toFixed(1)}%
                       </span>
                     </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Cost vs Attendance KPI */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4 text-foreground">Cost Efficiency Analysis</h3>
+          <div className="grid gap-4 md:grid-cols-2">
+            {costVsAttendance.map((location, index) => (
+              <Card key={index} className="p-5 border-destructive/50 bg-destructive/5">
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="font-semibold text-foreground text-lg mb-1">{location.location}</h4>
+                      <Badge variant="destructive" className="text-xs">High Cost, Low Attendance</Badge>
+                    </div>
+                    <div className="rounded-lg bg-destructive/10 p-3">
+                      <AlertCircle className="h-6 w-6 text-destructive" />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-3">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Contract Value</p>
+                      <p className="text-lg font-bold text-foreground">
+                        ${(location.contractValue / 1000).toFixed(0)}K
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Attendance</p>
+                      <p className="text-lg font-bold text-destructive">{location.attendanceRate}%</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Cost/Attendee</p>
+                      <p className="text-lg font-bold text-foreground">
+                        ${(location.costPerAttendee / 1000).toFixed(0)}K
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-destructive/20">
+                    <p className="text-xs text-muted-foreground">
+                      ⚠️ Potential annual savings: ${((location.contractValue * 0.6) / 1000).toFixed(0)}K through renegotiation or termination
+                    </p>
                   </div>
                 </div>
               </Card>
