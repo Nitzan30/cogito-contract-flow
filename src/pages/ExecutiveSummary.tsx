@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Globe, TrendingUp, AlertCircle, DollarSign, FileText, Target } from "lucide-react";
 
 const regions = [
-  { code: "IND", name: "India", contracts: 42, value: 2100000, expiring: 4, compliance: 96 },
-  { code: "ISR", name: "Israel", contracts: 28, value: 1850000, expiring: 3, compliance: 94 },
-  { code: "NA", name: "North America", contracts: 89, value: 4200000, expiring: 7, compliance: 95 },
-  { code: "CALA", name: "Central America & Latin America", contracts: 31, value: 1450000, expiring: 2, compliance: 92 },
-  { code: "APAC", name: "Asia Pacific", contracts: 35, value: 1900000, expiring: 1, compliance: 97 },
-  { code: "EMEA", name: "Europe, Middle East & Africa", contracts: 22, value: 900000, expiring: 1, compliance: 93 },
+  { code: "IND", name: "India", contracts: 42, value: 2100000, expiring: 4, compliance: 96, fyRemaining: 850000 },
+  { code: "ISR", name: "Israel", contracts: 28, value: 1850000, expiring: 3, compliance: 94, fyRemaining: 720000 },
+  { code: "NA", name: "North America", contracts: 89, value: 4200000, expiring: 7, compliance: 95, fyRemaining: 1680000 },
+  { code: "CALA", name: "Central America & Latin America", contracts: 31, value: 1450000, expiring: 2, compliance: 92, fyRemaining: 580000 },
+  { code: "APAC", name: "Asia Pacific", contracts: 35, value: 1900000, expiring: 1, compliance: 97, fyRemaining: 760000 },
+  { code: "EMEA", name: "Europe, Middle East & Africa", contracts: 22, value: 900000, expiring: 1, compliance: 93, fyRemaining: 360000 },
 ];
 
 const insights = [
@@ -44,7 +44,8 @@ export default function ExecutiveSummary() {
     contracts: regions.reduce((sum, r) => sum + r.contracts, 0),
     value: regions.reduce((sum, r) => sum + r.value, 0),
     expiring: regions.reduce((sum, r) => sum + r.expiring, 0),
-    avgCompliance: Math.round(regions.reduce((sum, r) => sum + r.compliance, 0) / regions.length)
+    avgCompliance: Math.round(regions.reduce((sum, r) => sum + r.compliance, 0) / regions.length),
+    fyRemaining: regions.reduce((sum, r) => sum + r.fyRemaining, 0)
   };
 
   return (
@@ -67,7 +68,7 @@ export default function ExecutiveSummary() {
             </div>
           </div>
           
-          <div className="grid gap-6 md:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <FileText className="h-4 w-4" />
@@ -82,6 +83,18 @@ export default function ExecutiveSummary() {
               </div>
               <p className="text-4xl font-bold text-foreground">
                 ${(wwTotals.value / 1000000).toFixed(1)}M
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <DollarSign className="h-4 w-4" />
+                <span className="text-sm font-medium">Amount Left This FY</span>
+              </div>
+              <p className="text-4xl font-bold text-primary">
+                ${(wwTotals.fyRemaining / 1000000).toFixed(1)}M
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {((wwTotals.fyRemaining / wwTotals.value) * 100).toFixed(0)}% of total value
               </p>
             </div>
             <div className="space-y-2">
@@ -148,7 +161,13 @@ export default function ExecutiveSummary() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-border">
+                  <div className="pt-2 border-t border-border space-y-2">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Amount Left This FY</p>
+                      <p className="text-lg font-bold text-primary">
+                        ${(region.fyRemaining / 1000000).toFixed(2)}M
+                      </p>
+                    </div>
                     <div className="flex justify-between text-xs">
                       <span className="text-muted-foreground">% of WW Portfolio</span>
                       <span className="font-semibold text-foreground">
