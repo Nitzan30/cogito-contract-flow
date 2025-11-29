@@ -136,6 +136,37 @@ export default function ExecutiveSummary() {
           <p className="text-muted-foreground">Global contract portfolio overview and strategic insights</p>
         </div>
 
+        {/* Hero Headlines */}
+        <Card className="p-8 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/20 border-primary/30 shadow-lg">
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                Next-Gen Budget Control
+              </h1>
+              <p className="text-xl md:text-2xl font-semibold text-primary">
+                Four-Tier Financial Command System
+              </p>
+              <p className="text-lg text-muted-foreground">
+                Managing budget with Real-Time Accountability
+              </p>
+            </div>
+            
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+            
+            <div className="space-y-3">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                From Tracking to Mastery
+              </h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Transform budget management from reactive reporting to proactive financial command
+              </p>
+              <p className="text-lg md:text-xl font-semibold text-primary">
+                Every dollar. Every vendor. Every location. Under control.
+              </p>
+            </div>
+          </div>
+        </Card>
+
         {/* Worldwide Totals */}
         <Card className="p-6 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
           <div className="flex items-center gap-3 mb-6">
