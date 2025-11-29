@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, TrendingUp, AlertCircle, DollarSign, FileText, Target } from "lucide-react";
+import { Globe, TrendingUp, AlertCircle, DollarSign, FileText, Target, TicketIcon, Accessibility } from "lucide-react";
 
 const regions = [
   { code: "IND", name: "India", contracts: 42, value: 2100000, expiring: 4, compliance: 96, fyRemaining: 850000 },
@@ -13,6 +13,18 @@ const regions = [
 ];
 
 const insights = [
+  {
+    title: "High Service Ticket Volume",
+    description: "CleanPro Services and FacilityMax showing elevated complaint volumes in ServiceNow. Consider vendor replacement before renewal.",
+    icon: TicketIcon,
+    priority: "high"
+  },
+  {
+    title: "Accessibility Compliance Gaps",
+    description: "3 vendors lack proper disability accommodations, creating legal and reputational risk. Immediate remediation or contract termination recommended.",
+    icon: Accessibility,
+    priority: "high"
+  },
   {
     title: "High Cost, Low Attendance",
     description: "VA and Herndon locations showing significant cost inefficiency with high contract values but minimal utilization. Immediate review recommended.",
@@ -48,6 +60,63 @@ const insights = [
 const costVsAttendance = [
   { location: "VA", contractValue: 850000, attendanceRate: 12, costPerAttendee: 70833 },
   { location: "Herndon", contractValue: 720000, attendanceRate: 8, costPerAttendee: 90000 },
+];
+
+const vendorTickets = [
+  { 
+    vendor: "CleanPro Services", 
+    site: "NY - Manhattan Office", 
+    contractValue: 450000, 
+    tickets: 47, 
+    avgResolutionTime: "8.5 days",
+    category: "Cleaning Services",
+    riskLevel: "high" as const
+  },
+  { 
+    vendor: "FacilityMax", 
+    site: "CA - San Francisco HQ", 
+    contractValue: 620000, 
+    tickets: 38, 
+    avgResolutionTime: "6.2 days",
+    category: "Facility Management",
+    riskLevel: "high" as const
+  },
+  { 
+    vendor: "SecureGuard Inc", 
+    site: "TX - Austin Campus", 
+    contractValue: 380000, 
+    tickets: 29, 
+    avgResolutionTime: "5.1 days",
+    category: "Security Services",
+    riskLevel: "medium" as const
+  },
+];
+
+const accessibilityRisks = [
+  {
+    vendor: "CulinaryDelights",
+    site: "NY - Manhattan Office",
+    contractValue: 580000,
+    issue: "No wheelchair-accessible serving areas or disability accommodations in cafeteria layout",
+    complianceGap: "ADA Section 508",
+    riskLevel: "high" as const
+  },
+  {
+    vendor: "FitnessHub Pro",
+    site: "CA - San Francisco HQ",
+    contractValue: 420000,
+    issue: "Gym equipment lacks accessible options for people with mobility impairments",
+    complianceGap: "ADA Title III",
+    riskLevel: "high" as const
+  },
+  {
+    vendor: "TechSupport Plus",
+    site: "EMEA Region",
+    contractValue: 290000,
+    issue: "Support portal and documentation not WCAG 2.1 AA compliant for screen readers",
+    complianceGap: "WCAG 2.1 AA",
+    riskLevel: "medium" as const
+  },
 ];
 
 export default function ExecutiveSummary() {
@@ -185,6 +254,101 @@ export default function ExecutiveSummary() {
                         {((region.value / wwTotals.value) * 100).toFixed(1)}%
                       </span>
                     </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Vendor Service Quality - Ticket Volume KPI */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4 text-foreground">Vendor Service Quality</h3>
+          <p className="text-sm text-muted-foreground mb-4">ServiceNow ticket volume analysis - High ticket counts indicate service dissatisfaction</p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {vendorTickets.map((vendor, index) => (
+              <Card key={index} className={`p-5 ${vendor.riskLevel === 'high' ? 'border-destructive/50 bg-destructive/5' : 'border-warning/50 bg-warning/5'}`}>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground text-base mb-1">{vendor.vendor}</h4>
+                      <p className="text-xs text-muted-foreground mb-2">{vendor.site}</p>
+                      <Badge variant={vendor.riskLevel === 'high' ? 'destructive' : 'default'} className="text-xs">
+                        {vendor.tickets} Open Tickets
+                      </Badge>
+                    </div>
+                    <div className={`rounded-lg p-3 ${vendor.riskLevel === 'high' ? 'bg-destructive/10' : 'bg-warning/10'}`}>
+                      <TicketIcon className={`h-6 w-6 ${vendor.riskLevel === 'high' ? 'text-destructive' : 'text-warning'}`} />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Contract Value</p>
+                      <p className="text-base font-bold text-foreground">
+                        ${(vendor.contractValue / 1000).toFixed(0)}K
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-1">Avg Resolution</p>
+                      <p className="text-base font-bold text-foreground">{vendor.avgResolutionTime}</p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-border/50">
+                    <p className="text-xs text-muted-foreground mb-1">Category</p>
+                    <p className="text-xs font-medium text-foreground">{vendor.category}</p>
+                  </div>
+
+                  <div className="pt-2 border-t border-destructive/20 bg-destructive/5 -mx-5 -mb-5 px-5 py-3 rounded-b-lg">
+                    <p className="text-xs text-muted-foreground">
+                      ⚠️ High dissatisfaction risk - Consider non-renewal or mid-year termination
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Accessibility Compliance KPI */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4 text-foreground">Accessibility Compliance Risk</h3>
+          <p className="text-sm text-muted-foreground mb-4">Vendors lacking disability accommodations represent legal and reputational risk</p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {accessibilityRisks.map((risk, index) => (
+              <Card key={index} className={`p-5 ${risk.riskLevel === 'high' ? 'border-destructive/50 bg-destructive/5' : 'border-warning/50 bg-warning/5'}`}>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground text-base mb-1">{risk.vendor}</h4>
+                      <p className="text-xs text-muted-foreground mb-2">{risk.site}</p>
+                      <Badge variant={risk.riskLevel === 'high' ? 'destructive' : 'default'} className="text-xs">
+                        Non-Compliant
+                      </Badge>
+                    </div>
+                    <div className={`rounded-lg p-3 ${risk.riskLevel === 'high' ? 'bg-destructive/10' : 'bg-warning/10'}`}>
+                      <Accessibility className={`h-6 w-6 ${risk.riskLevel === 'high' ? 'text-destructive' : 'text-warning'}`} />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Contract Value</p>
+                    <p className="text-base font-bold text-foreground">
+                      ${(risk.contractValue / 1000).toFixed(0)}K
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-border/50">
+                    <p className="text-xs text-muted-foreground mb-1">Compliance Gap</p>
+                    <p className="text-xs font-semibold text-destructive mb-2">{risk.complianceGap}</p>
+                    <p className="text-xs text-foreground leading-relaxed">{risk.issue}</p>
+                  </div>
+
+                  <div className="pt-2 border-t border-destructive/20 bg-destructive/5 -mx-5 -mb-5 px-5 py-3 rounded-b-lg">
+                    <p className="text-xs text-muted-foreground">
+                      🚨 Legal exposure - Require immediate remediation or terminate contract
+                    </p>
                   </div>
                 </div>
               </Card>
