@@ -9,6 +9,7 @@ import Contracts from "./pages/Contracts";
 import Alerts from "./pages/Alerts";
 import Analytics from "./pages/Analytics";
 import Compliance from "./pages/Compliance";
+import ProjectPlan from "./pages/ProjectPlan";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/compliance" element={<Compliance />} />
+          <Route path="/project-plan" element={<ProjectPlan />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
