@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Globe, Calendar } from "lucide-react";
+import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Globe, Calendar, LogIn } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 interface DashboardLayoutProps {
@@ -15,6 +15,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { to: "/analytics", icon: BarChart3, label: "Analytics" },
     { to: "/compliance", icon: FileCheck, label: "Compliance" },
     { to: "/project-plan", icon: Calendar, label: "Project Plan" },
+    { to: "/login", icon: LogIn, label: "Login" },
   ];
 
   return (
