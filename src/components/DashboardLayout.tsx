@@ -8,14 +8,13 @@ interface DashboardLayoutProps {
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navItems = [
-    { to: "/", icon: Home, label: "Dashboard" },
+    { to: "/dashboard", icon: Home, label: "Dashboard" },
     { to: "/executive-summary", icon: Globe, label: "Executive Summary" },
     { to: "/contracts", icon: FileText, label: "Contracts" },
     { to: "/alerts", icon: Bell, label: "Alerts" },
     { to: "/analytics", icon: BarChart3, label: "Analytics" },
     { to: "/compliance", icon: FileCheck, label: "Compliance" },
     { to: "/project-plan", icon: Calendar, label: "Project Plan" },
-    { to: "/login", icon: LogIn, label: "Login" },
   ];
 
   return (
