@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Globe, 
   AlertCircle, 
@@ -55,6 +56,7 @@ const Button = ({ children, onClick, variant = "primary", className = "", disabl
 // --- LOGIN SCREEN COMPONENT ---
 
 export default function LoginScreen() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -73,6 +75,7 @@ export default function LoginScreen() {
       const user = USERS_DB.find(u => u.email === email && u.pass === password);
       if (user) {
         setLoggedInUser(user);
+        navigate('/dashboard');
       } else {
         setError('Invalid credentials. Please try again.');
         setIsLoading(false);
@@ -89,6 +92,7 @@ export default function LoginScreen() {
         const user = USERS_DB.find(u => u.email === 'nitzan.raich@gmail.com');
         setLoggedInUser(user);
         setSsoStep('idle');
+        navigate('/dashboard');
     }, 2500);
   };
 
