@@ -157,7 +157,7 @@ export default function LoginScreen() {
                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                  <Globe className="w-5 h-5 text-white" />
                </div>
-               <span className="font-bold text-xl tracking-tight">BudgetCommand™</span>
+               <span className="font-bold text-xl tracking-tight">BudgetMaster 360 AGENT</span>
              </div>
              <h1 className="text-4xl font-bold leading-tight mb-4">
                Next-Gen Financial Control
