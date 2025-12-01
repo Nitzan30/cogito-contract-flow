@@ -162,9 +162,9 @@ export default function LoginScreen() {
              <h1 className="text-4xl font-bold leading-tight mb-4">
                Next-Gen Financial Control
              </h1>
-             <p className="text-slate-300 text-lg">
-               Manage $15M portfolio with real-time AI accountability and 4-tier visibility.
-             </p>
+              <p className="text-slate-300 text-lg">
+                Manage $166M portfolio with real-time AI accountability and 4-tier visibility.
+              </p>
            </div>
            
            <div className="relative z-10 space-y-4">

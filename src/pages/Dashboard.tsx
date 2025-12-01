@@ -25,7 +25,7 @@ export default function Dashboard() {
           />
           <MetricCard
             title="Total Contract Value"
-            value="$12.4M"
+            value="$166M"
             change="+8.2% from last quarter"
             changeType="positive"
             icon={DollarSign}

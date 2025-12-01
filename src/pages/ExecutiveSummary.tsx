@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Globe, TrendingUp, AlertCircle, DollarSign, FileText, Target, TicketIcon, Accessibility } from "lucide-react";
 
 const regions = [
-  { code: "IND", name: "India", contracts: 42, value: 2100000, expiring: 4, compliance: 96, fyRemaining: 850000 },
-  { code: "ISR", name: "Israel", contracts: 28, value: 1850000, expiring: 3, compliance: 94, fyRemaining: 720000 },
-  { code: "NA", name: "North America", contracts: 89, value: 4200000, expiring: 7, compliance: 95, fyRemaining: 1680000 },
-  { code: "CALA", name: "Central America & Latin America", contracts: 31, value: 1450000, expiring: 2, compliance: 92, fyRemaining: 580000 },
-  { code: "APAC", name: "Asia Pacific", contracts: 35, value: 1900000, expiring: 1, compliance: 97, fyRemaining: 760000 },
-  { code: "EMEA", name: "Europe, Middle East & Africa", contracts: 22, value: 900000, expiring: 1, compliance: 93, fyRemaining: 360000 },
+  { code: "IND", name: "India", contracts: 42, value: 43000000, expiring: 4, compliance: 96, fyRemaining: 17420000 },
+  { code: "ISR", name: "Israel", contracts: 28, value: 47000000, expiring: 3, compliance: 94, fyRemaining: 18330000 },
+  { code: "NA", name: "North America", contracts: 89, value: 35000000, expiring: 7, compliance: 95, fyRemaining: 14000000 },
+  { code: "CALA", name: "Central America & Latin America", contracts: 31, value: 10000000, expiring: 2, compliance: 92, fyRemaining: 4000000 },
+  { code: "APAC", name: "Asia Pacific", contracts: 35, value: 15000000, expiring: 1, compliance: 97, fyRemaining: 6000000 },
+  { code: "EMEA", name: "Europe, Middle East & Africa", contracts: 22, value: 16000000, expiring: 1, compliance: 93, fyRemaining: 6400000 },
 ];
 
 const insights = [
