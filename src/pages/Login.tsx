@@ -160,7 +160,7 @@ export default function LoginScreen() {
                <span className="font-bold text-xl tracking-tight">BudgetMaster 360 AGENT</span>
              </div>
              <h1 className="text-4xl font-bold leading-tight mb-4">
-               Next-Gen Financial Control
+               BudgetMaster 360
              </h1>
               <p className="text-slate-300 text-lg">
                 Manage $166M portfolio with real-time AI accountability and 4-tier visibility.
