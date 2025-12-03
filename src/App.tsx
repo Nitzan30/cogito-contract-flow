@@ -12,6 +12,10 @@ import Compliance from "./pages/Compliance";
 import ProjectPlan from "./pages/ProjectPlan";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Portfolio from "./pages/Portfolio";
+import PortfolioRegion from "./pages/PortfolioRegion";
+import PortfolioSite from "./pages/PortfolioSite";
+import PortfolioSettings from "./pages/PortfolioSettings";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/executive-summary" element={<ExecutiveSummary />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio/region/:region" element={<PortfolioRegion />} />
+          <Route path="/portfolio/site/:siteId" element={<PortfolioSite />} />
+          <Route path="/portfolio/settings" element={<PortfolioSettings />} />
           <Route path="/contracts" element={<Contracts />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/analytics" element={<Analytics />} />
