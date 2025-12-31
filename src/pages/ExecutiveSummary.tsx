@@ -48,7 +48,7 @@ export default function ExecutiveSummary() {
           <div className="space-y-6">
             <div className="space-y-3">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-                BudgetMaster 360
+                SiteLense360
               </h1>
               <p className="text-xl md:text-2xl font-semibold text-primary">
                 Four-Tier Financial Command System
