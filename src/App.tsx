@@ -3,7 +3,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
 import ExecutiveSummary from "./pages/ExecutiveSummary";
 import StrategicVendorIntelligence from "./pages/StrategicVendorIntelligence";
 import Contracts from "./pages/Contracts";
@@ -29,7 +28,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/executive-summary" element={<ExecutiveSummary />} />
           <Route path="/executive-summary" element={<ExecutiveSummary />} />
           <Route path="/vendor-intelligence" element={<StrategicVendorIntelligence />} />
           <Route path="/regions" element={<Regions />} />
