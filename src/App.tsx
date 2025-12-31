@@ -14,6 +14,7 @@ import ProjectPlan from "./pages/ProjectPlan";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Regions from "./pages/Regions";
+import SiteDetails from "./pages/SiteDetails";
 import PortfolioRegion from "./pages/PortfolioRegion";
 import PortfolioSite from "./pages/PortfolioSite";
 import PortfolioSettings from "./pages/PortfolioSettings";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/executive-summary" element={<ExecutiveSummary />} />
           <Route path="/vendor-intelligence" element={<StrategicVendorIntelligence />} />
           <Route path="/regions" element={<Regions />} />
+          <Route path="/site/:siteId" element={<SiteDetails />} />
           {/* Redirect old portfolio route to regions */}
           <Route path="/portfolio" element={<Navigate to="/regions" replace />} />
           <Route path="/portfolio/region/:region" element={<PortfolioRegion />} />

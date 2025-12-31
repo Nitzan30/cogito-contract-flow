@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
 import {
   Building2,
   Users,
@@ -15,12 +15,10 @@ import {
   Shield,
   Zap,
   Leaf,
-  ChevronDown,
-  ChevronRight,
   MapPin,
-  Calendar,
+  ExternalLink,
 } from "lucide-react";
-import { mockSites, calculateGlobalSummary } from "@/data/mockPortfolioData";
+import { mockSites } from "@/data/mockPortfolioData";
 import { Region, Domain, Site } from "@/types/portfolio";
 import {
   Table,
@@ -30,7 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SiteExpandedDetails } from "@/components/SiteExpandedDetails";
 
 const regionTabs: { code: Region; name: string }[] = [
   { code: "NA", name: "NA" },
@@ -87,91 +84,92 @@ const domainConfig: { domain: Domain; icon: typeof Building2; color: string }[] 
   { domain: "EHS Facility", icon: Leaf, color: "text-green-500" },
 ];
 
-function SiteRow({ site }: { site: Site }) {
-  const [isOpen, setIsOpen] = useState(false);
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Active":
+      return "bg-green-500/10 text-green-700 border-green-200";
+    case "Under Review":
+      return "bg-amber-500/10 text-amber-700 border-amber-200";
+    case "Approved to Close":
+      return "bg-red-500/10 text-red-700 border-red-200";
+    default:
+      return "bg-secondary text-secondary-foreground";
+  }
+};
+
+function SiteRow({ site, activeTab }: { site: Site; activeTab: Region }) {
+  const navigate = useNavigate();
   const contractEndingSoon = isContractEndingSoon(site.contractEndDate);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Active":
-        return "bg-green-500/10 text-green-700 border-green-200";
-      case "Under Review":
-        return "bg-amber-500/10 text-amber-700 border-amber-200";
-      case "Approved to Close":
-        return "bg-red-500/10 text-red-700 border-red-200";
-      default:
-        return "";
-    }
+  const handleViewDetails = () => {
+    navigate(`/site/${site.id}?from=${activeTab}`);
   };
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <TableRow className="hover:bg-secondary/30 transition-colors">
-        <TableCell className="w-[200px]">
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-foreground">{site.siteName}</span>
-            {site.isSmallSiteCandidate && (
-              <Badge variant="destructive" className="text-xs py-0">
-                <TrendingDown className="w-3 h-3 mr-1" />
-                SSP
-              </Badge>
-            )}
-          </div>
-        </TableCell>
-        <TableCell className="w-[180px]">
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <MapPin className="w-3 h-3 shrink-0" />
-            <span className="text-sm truncate">{site.city}, {site.country}</span>
-          </div>
-        </TableCell>
-        <TableCell className="w-[120px]">
-          <Badge className={`${getStatusColor(site.status)} border`}>
-            {site.status}
-          </Badge>
-        </TableCell>
-        <TableCell className="w-[150px]">
-          <div className="flex items-center gap-2">
-            <Progress value={site.occupancyPercent} className="h-2 flex-1 max-w-[80px]" />
-            <span className={`text-sm font-medium min-w-[40px] text-right ${
-              site.occupancyPercent < 40 ? 'text-amber-600' : 'text-foreground'
-            }`}>
-              {site.occupancyPercent}%
-            </span>
-          </div>
-        </TableCell>
-        <TableCell className="w-[120px] text-right">
-          <span className="font-medium text-foreground">{formatCurrency(site.fy25Actual)}</span>
-        </TableCell>
-        <TableCell className="w-[130px]">
-          <div className="flex items-center gap-1">
-            {contractEndingSoon && (
-              <AlertTriangle className="w-3.5 h-3.5 text-destructive shrink-0" />
-            )}
-            <span className={`text-sm ${contractEndingSoon ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
-              {formatDate(site.contractEndDate)}
-            </span>
-          </div>
-        </TableCell>
-        <TableCell className="w-[60px] text-center">
-          <CollapsibleTrigger asChild>
-            <button className="p-1.5 hover:bg-secondary rounded-md transition-colors">
-              {isOpen ? (
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
-              ) : (
-                <ChevronRight className="w-4 h-4 text-muted-foreground" />
-              )}
-            </button>
-          </CollapsibleTrigger>
-        </TableCell>
-      </TableRow>
-      <CollapsibleContent asChild>
-        <tr>
-          <td colSpan={7} className="p-0 border-b">
-            <SiteExpandedDetails site={site} />
-          </td>
-        </tr>
-      </CollapsibleContent>
-    </Collapsible>
+    <TableRow 
+      className="hover:bg-secondary/30 transition-colors cursor-pointer"
+      onClick={handleViewDetails}
+    >
+      <TableCell className="w-[200px]">
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-foreground">{site.siteName}</span>
+          {site.isSmallSiteCandidate && (
+            <Badge variant="destructive" className="text-xs py-0">
+              <TrendingDown className="w-3 h-3 mr-1" />
+              SSP
+            </Badge>
+          )}
+        </div>
+      </TableCell>
+      <TableCell className="w-[180px]">
+        <div className="flex items-center gap-1 text-muted-foreground">
+          <MapPin className="w-3 h-3 shrink-0" />
+          <span className="text-sm truncate">{site.city}, {site.country}</span>
+        </div>
+      </TableCell>
+      <TableCell className="w-[120px]">
+        <Badge className={`${getStatusColor(site.status)} border`}>
+          {site.status}
+        </Badge>
+      </TableCell>
+      <TableCell className="w-[150px]">
+        <div className="flex items-center gap-2">
+          <Progress value={site.occupancyPercent} className="h-2 flex-1 max-w-[80px]" />
+          <span className={`text-sm font-medium min-w-[40px] text-right ${
+            site.occupancyPercent < 40 ? 'text-amber-600' : 'text-foreground'
+          }`}>
+            {site.occupancyPercent}%
+          </span>
+        </div>
+      </TableCell>
+      <TableCell className="w-[120px] text-right">
+        <span className="font-medium text-foreground">{formatCurrency(site.fy25Actual)}</span>
+      </TableCell>
+      <TableCell className="w-[130px]">
+        <div className="flex items-center gap-1">
+          {contractEndingSoon && (
+            <AlertTriangle className="w-3.5 h-3.5 text-destructive shrink-0" />
+          )}
+          <span className={`text-sm ${contractEndingSoon ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
+            {formatDate(site.contractEndDate)}
+          </span>
+        </div>
+      </TableCell>
+      <TableCell className="w-[100px] text-center">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-8 px-2 text-xs"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleViewDetails();
+          }}
+        >
+          <ExternalLink className="w-3.5 h-3.5 mr-1" />
+          View
+        </Button>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -188,7 +186,7 @@ export default function Regions() {
     }
   }, [searchParams]);
 
-  const globalSummary = calculateGlobalSummary(mockSites);
+  
 
   const getRegionSites = (region: Region) => mockSites.filter((s) => s.region === region);
 
@@ -354,12 +352,12 @@ export default function Regions() {
                             <TableHead className="w-[150px]">Occupancy</TableHead>
                             <TableHead className="w-[120px] text-right">Annual Cost</TableHead>
                             <TableHead className="w-[130px]">Contract End</TableHead>
-                            <TableHead className="w-[60px] text-center">Actions</TableHead>
+                            <TableHead className="w-[100px] text-center">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {sites.map((site) => (
-                            <SiteRow key={site.id} site={site} />
+                            <SiteRow key={site.id} site={site} activeTab={activeTab} />
                           ))}
                           {sites.length === 0 && (
                             <TableRow>
