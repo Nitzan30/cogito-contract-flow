@@ -3,17 +3,22 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Building2,
   Users,
   DollarSign,
   TrendingDown,
   AlertTriangle,
-  ArrowRight,
   Shield,
   Zap,
   Leaf,
+  ChevronDown,
+  ChevronRight,
+  MapPin,
+  Calendar,
 } from "lucide-react";
 import { mockSites, calculateGlobalSummary } from "@/data/mockPortfolioData";
 import { Region, Domain, Site } from "@/types/portfolio";
@@ -25,6 +30,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SiteExpandedDetails } from "@/components/SiteExpandedDetails";
 
 const regionTabs: { code: Region; name: string }[] = [
   { code: "NA", name: "NA" },
@@ -38,6 +44,20 @@ const regionTabs: { code: Region; name: string }[] = [
 const formatCurrency = (value: number) => {
   if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
   return `$${(value / 1000).toFixed(0)}K`;
+};
+
+const isContractEndingSoon = (dateString: string) => {
+  const endDate = new Date(dateString);
+  const today = new Date();
+  const diffDays = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  return diffDays <= 90 && diffDays > 0;
+};
+
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'short' 
+  });
 };
 
 function getDomainStats(sites: Site[], domain: Domain) {
@@ -66,6 +86,107 @@ const domainConfig: { domain: Domain; icon: typeof Building2; color: string }[] 
   { domain: "Physical Security", icon: Shield, color: "text-blue-500" },
   { domain: "EHS Facility", icon: Leaf, color: "text-green-500" },
 ];
+
+function SiteRow({ site }: { site: Site }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const contractEndingSoon = isContractEndingSoon(site.contractEndDate);
+
+  const getStatusVariant = (status: string) => {
+    switch (status) {
+      case "Active":
+        return "default";
+      case "Under Review":
+        return "secondary";
+      case "Approved to Close":
+        return "destructive";
+      default:
+        return "outline";
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Active":
+        return "bg-green-500/10 text-green-700 border-green-200";
+      case "Under Review":
+        return "bg-amber-500/10 text-amber-700 border-amber-200";
+      case "Approved to Close":
+        return "bg-red-500/10 text-red-700 border-red-200";
+      default:
+        return "";
+    }
+  };
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <TableRow className="hover:bg-secondary/30 transition-colors">
+        <TableCell className="w-10">
+          <CollapsibleTrigger asChild>
+            <button className="p-1 hover:bg-secondary rounded transition-colors">
+              {isOpen ? (
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              ) : (
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+              )}
+            </button>
+          </CollapsibleTrigger>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-foreground">{site.siteName}</span>
+            {site.isSmallSiteCandidate && (
+              <Badge variant="destructive" className="text-xs py-0">
+                <TrendingDown className="w-3 h-3 mr-1" />
+                SSP
+              </Badge>
+            )}
+          </div>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-1 text-muted-foreground">
+            <MapPin className="w-3 h-3" />
+            <span className="text-sm">{site.city}, {site.country}</span>
+          </div>
+        </TableCell>
+        <TableCell>
+          <Badge className={`${getStatusColor(site.status)} border`}>
+            {site.status}
+          </Badge>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-2 min-w-[120px]">
+            <Progress value={site.occupancyPercent} className="h-2 flex-1" />
+            <span className={`text-sm font-medium min-w-[40px] text-right ${
+              site.occupancyPercent < 40 ? 'text-amber-600' : 'text-foreground'
+            }`}>
+              {site.occupancyPercent}%
+            </span>
+          </div>
+        </TableCell>
+        <TableCell className="text-right">
+          <span className="font-medium text-foreground">{formatCurrency(site.fy25Actual)}</span>
+        </TableCell>
+        <TableCell>
+          <div className="flex items-center gap-1">
+            {contractEndingSoon && (
+              <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+            )}
+            <span className={`text-sm ${contractEndingSoon ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
+              {formatDate(site.contractEndDate)}
+            </span>
+          </div>
+        </TableCell>
+      </TableRow>
+      <CollapsibleContent asChild>
+        <tr>
+          <td colSpan={7} className="p-0 border-b">
+            <SiteExpandedDetails site={site} />
+          </td>
+        </tr>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
 
 export default function Regions() {
   const [searchParams] = useSearchParams();
@@ -100,10 +221,6 @@ export default function Regions() {
           : 0,
       smallSiteCandidates: sites.filter((s) => s.isSmallSiteCandidate).length,
     };
-  };
-
-  const handleSiteClick = (siteId: string) => {
-    navigate(`/portfolio/site/${siteId}`);
   };
 
   return (
@@ -236,75 +353,33 @@ export default function Regions() {
                   </div>
                 </div>
 
-                {/* Sites Table */}
+                {/* Sites Table with Progressive Disclosure */}
                 <div className="space-y-4">
                   <h2 className="text-xl font-semibold text-foreground">Sites</h2>
-                  <Card>
+                  <Card className="overflow-hidden">
                     <Table>
                       <TableHeader>
-                        <TableRow>
+                        <TableRow className="bg-muted/50">
+                          <TableHead className="w-10"></TableHead>
                           <TableHead>Site Name</TableHead>
-                          <TableHead>Type</TableHead>
+                          <TableHead>Location</TableHead>
                           <TableHead>Status</TableHead>
-                          <TableHead className="text-right">Cost</TableHead>
-                          <TableHead className="text-right">Headcount</TableHead>
-                          <TableHead className="text-right">Occupancy</TableHead>
-                          <TableHead></TableHead>
+                          <TableHead>Occupancy</TableHead>
+                          <TableHead className="text-right">Annual Cost</TableHead>
+                          <TableHead>Contract End</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {sites.map((site) => (
-                          <TableRow
-                            key={site.id}
-                            className="cursor-pointer hover:bg-secondary/50"
-                            onClick={() => handleSiteClick(site.id)}
-                          >
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium">{site.siteName}</span>
-                                {site.isSmallSiteCandidate && (
-                                  <Badge variant="destructive" className="text-xs">
-                                    <TrendingDown className="w-3 h-3 mr-1" />
-                                    Candidate
-                                  </Badge>
-                                )}
-                              </div>
-                              <p className="text-xs text-muted-foreground">{site.country}</p>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant="outline">{site.siteType}</Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                variant={
-                                  site.status === "Active"
-                                    ? "default"
-                                    : site.status === "Under Review"
-                                    ? "secondary"
-                                    : "outline"
-                                }
-                              >
-                                {site.status}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right font-medium">
-                              {formatCurrency(site.totalCost)}
-                            </TableCell>
-                            <TableCell className="text-right">{site.headcount}</TableCell>
-                            <TableCell className="text-right">
-                              <span
-                                className={
-                                  site.occupancyPercent < 40 ? "text-warning font-medium" : ""
-                                }
-                              >
-                                {site.occupancyPercent}%
-                              </span>
-                            </TableCell>
-                            <TableCell>
-                              <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                          <SiteRow key={site.id} site={site} />
+                        ))}
+                        {sites.length === 0 && (
+                          <TableRow>
+                            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                              No sites found in this region
                             </TableCell>
                           </TableRow>
-                        ))}
+                        )}
                       </TableBody>
                     </Table>
                   </Card>
