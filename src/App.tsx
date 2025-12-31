@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import ExecutiveSummary from "./pages/ExecutiveSummary";
+import StrategicVendorIntelligence from "./pages/StrategicVendorIntelligence";
 import Contracts from "./pages/Contracts";
 import Alerts from "./pages/Alerts";
 import Analytics from "./pages/Analytics";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/executive-summary" element={<ExecutiveSummary />} />
+          <Route path="/vendor-intelligence" element={<StrategicVendorIntelligence />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/region/:region" element={<PortfolioRegion />} />
           <Route path="/portfolio/site/:siteId" element={<PortfolioSite />} />
