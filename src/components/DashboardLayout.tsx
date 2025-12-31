@@ -24,13 +24,18 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="container flex h-16 items-center gap-4">
+          <div className="flex items-center gap-2 shrink-0">
             <FileCheck className="h-7 w-7 text-primary" />
-            <h1 className="text-xl font-bold text-foreground">BudgetMaster 360 AGENT</h1>
+            <h1 className="text-xl font-bold text-foreground hidden sm:block">BudgetMaster 360</h1>
           </div>
-          <div className="flex items-center gap-4">
+          
+          {/* Centered Global Search */}
+          <div className="flex-1 flex justify-center px-4">
             <GlobalSearch />
+          </div>
+          
+          <div className="flex items-center gap-2 shrink-0">
             <button className="rounded-lg p-2 hover:bg-secondary">
               <Bell className="h-5 w-5" />
             </button>

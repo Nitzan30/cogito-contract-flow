@@ -91,19 +91,6 @@ function SiteRow({ site }: { site: Site }) {
   const [isOpen, setIsOpen] = useState(false);
   const contractEndingSoon = isContractEndingSoon(site.contractEndDate);
 
-  const getStatusVariant = (status: string) => {
-    switch (status) {
-      case "Active":
-        return "default";
-      case "Under Review":
-        return "secondary";
-      case "Approved to Close":
-        return "destructive";
-      default:
-        return "outline";
-    }
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Active":
@@ -120,18 +107,7 @@ function SiteRow({ site }: { site: Site }) {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <TableRow className="hover:bg-secondary/30 transition-colors">
-        <TableCell className="w-10">
-          <CollapsibleTrigger asChild>
-            <button className="p-1 hover:bg-secondary rounded transition-colors">
-              {isOpen ? (
-                <ChevronDown className="w-4 h-4 text-muted-foreground" />
-              ) : (
-                <ChevronRight className="w-4 h-4 text-muted-foreground" />
-              )}
-            </button>
-          </CollapsibleTrigger>
-        </TableCell>
-        <TableCell>
+        <TableCell className="w-[200px]">
           <div className="flex items-center gap-2">
             <span className="font-medium text-foreground">{site.siteName}</span>
             {site.isSmallSiteCandidate && (
@@ -142,20 +118,20 @@ function SiteRow({ site }: { site: Site }) {
             )}
           </div>
         </TableCell>
-        <TableCell>
+        <TableCell className="w-[180px]">
           <div className="flex items-center gap-1 text-muted-foreground">
-            <MapPin className="w-3 h-3" />
-            <span className="text-sm">{site.city}, {site.country}</span>
+            <MapPin className="w-3 h-3 shrink-0" />
+            <span className="text-sm truncate">{site.city}, {site.country}</span>
           </div>
         </TableCell>
-        <TableCell>
+        <TableCell className="w-[120px]">
           <Badge className={`${getStatusColor(site.status)} border`}>
             {site.status}
           </Badge>
         </TableCell>
-        <TableCell>
-          <div className="flex items-center gap-2 min-w-[120px]">
-            <Progress value={site.occupancyPercent} className="h-2 flex-1" />
+        <TableCell className="w-[150px]">
+          <div className="flex items-center gap-2">
+            <Progress value={site.occupancyPercent} className="h-2 flex-1 max-w-[80px]" />
             <span className={`text-sm font-medium min-w-[40px] text-right ${
               site.occupancyPercent < 40 ? 'text-amber-600' : 'text-foreground'
             }`}>
@@ -163,18 +139,29 @@ function SiteRow({ site }: { site: Site }) {
             </span>
           </div>
         </TableCell>
-        <TableCell className="text-right">
+        <TableCell className="w-[120px] text-right">
           <span className="font-medium text-foreground">{formatCurrency(site.fy25Actual)}</span>
         </TableCell>
-        <TableCell>
+        <TableCell className="w-[130px]">
           <div className="flex items-center gap-1">
             {contractEndingSoon && (
-              <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+              <AlertTriangle className="w-3.5 h-3.5 text-destructive shrink-0" />
             )}
             <span className={`text-sm ${contractEndingSoon ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
               {formatDate(site.contractEndDate)}
             </span>
           </div>
+        </TableCell>
+        <TableCell className="w-[60px] text-center">
+          <CollapsibleTrigger asChild>
+            <button className="p-1.5 hover:bg-secondary rounded-md transition-colors">
+              {isOpen ? (
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              ) : (
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+              )}
+            </button>
+          </CollapsibleTrigger>
         </TableCell>
       </TableRow>
       <CollapsibleContent asChild>
@@ -357,31 +344,33 @@ export default function Regions() {
                 <div className="space-y-4">
                   <h2 className="text-xl font-semibold text-foreground">Sites</h2>
                   <Card className="overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-muted/50">
-                          <TableHead className="w-10"></TableHead>
-                          <TableHead>Site Name</TableHead>
-                          <TableHead>Location</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Occupancy</TableHead>
-                          <TableHead className="text-right">Annual Cost</TableHead>
-                          <TableHead>Contract End</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {sites.map((site) => (
-                          <SiteRow key={site.id} site={site} />
-                        ))}
-                        {sites.length === 0 && (
-                          <TableRow>
-                            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                              No sites found in this region
-                            </TableCell>
+                    <div className="overflow-x-auto">
+                      <Table className="table-fixed w-full min-w-[960px]">
+                        <TableHeader>
+                          <TableRow className="bg-muted/50">
+                            <TableHead className="w-[200px]">Site Name</TableHead>
+                            <TableHead className="w-[180px]">Location</TableHead>
+                            <TableHead className="w-[120px]">Status</TableHead>
+                            <TableHead className="w-[150px]">Occupancy</TableHead>
+                            <TableHead className="w-[120px] text-right">Annual Cost</TableHead>
+                            <TableHead className="w-[130px]">Contract End</TableHead>
+                            <TableHead className="w-[60px] text-center">Actions</TableHead>
                           </TableRow>
-                        )}
-                      </TableBody>
-                    </Table>
+                        </TableHeader>
+                        <TableBody>
+                          {sites.map((site) => (
+                            <SiteRow key={site.id} site={site} />
+                          ))}
+                          {sites.length === 0 && (
+                            <TableRow>
+                              <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                                No sites found in this region
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </Card>
                 </div>
               </TabsContent>
