@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Globe, Calendar, Building2, Users } from "lucide-react";
+import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Globe, Calendar, MapPin, Users } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { GlobalSearch } from "@/components/GlobalSearch";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { to: "/dashboard", icon: Home, label: "Dashboard" },
     { to: "/executive-summary", icon: Globe, label: "Executive Dashboard" },
     { to: "/vendor-intelligence", icon: Users, label: "Vendor Intelligence" },
-    { to: "/portfolio", icon: Building2, label: "Portfolio" },
+    { to: "/regions", icon: MapPin, label: "Regions" },
     { to: "/contracts", icon: FileText, label: "Contracts" },
     { to: "/alerts", icon: Bell, label: "Alerts" },
     { to: "/analytics", icon: BarChart3, label: "Analytics" },
@@ -29,6 +30,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <h1 className="text-xl font-bold text-foreground">BudgetMaster 360 AGENT</h1>
           </div>
           <div className="flex items-center gap-4">
+            <GlobalSearch />
             <button className="rounded-lg p-2 hover:bg-secondary">
               <Bell className="h-5 w-5" />
             </button>

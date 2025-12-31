@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building2, DollarSign, TrendingDown, TrendingUp } from "lucide-react";
+import { Region } from "@/types/portfolio";
 
-const regions = [
+const regions: { code: Region; name: string; contracts: number; value: number; expiring: number; compliance: number; fyRemaining: number }[] = [
   { code: "IND", name: "India", contracts: 42, value: 43000000, expiring: 4, compliance: 96, fyRemaining: 17420000 },
   { code: "ISR", name: "Israel", contracts: 28, value: 47000000, expiring: 3, compliance: 94, fyRemaining: 18330000 },
   { code: "NA", name: "North America", contracts: 89, value: 35000000, expiring: 7, compliance: 95, fyRemaining: 14000000 },
@@ -19,12 +21,18 @@ const AMOUNT_REALIZED = 101000000; // Example: $101.0M spent
 const REMAINING_AMOUNT = TOTAL_VALUE - AMOUNT_REALIZED; // $66.0M remaining
 
 export default function ExecutiveSummary() {
+  const navigate = useNavigate();
+  
   const wwTotals = {
     contracts: regions.reduce((sum, r) => sum + r.contracts, 0),
     value: regions.reduce((sum, r) => sum + r.value, 0),
     expiring: regions.reduce((sum, r) => sum + r.expiring, 0),
     avgCompliance: Math.round(regions.reduce((sum, r) => sum + r.compliance, 0) / regions.length),
     fyRemaining: regions.reduce((sum, r) => sum + r.fyRemaining, 0)
+  };
+
+  const handleRegionClick = (regionCode: Region) => {
+    navigate(`/regions?tab=${regionCode}`);
   };
 
   return (
@@ -135,12 +143,16 @@ export default function ExecutiveSummary() {
           </Card>
         </div>
 
-        {/* Regional Breakdown - Retained as-is */}
+        {/* Regional Breakdown - Now Clickable */}
         <div>
           <h3 className="text-xl font-semibold mb-4 text-foreground">Regional Breakdown</h3>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {regions.map((region) => (
-              <Card key={region.code} className="p-5 hover:shadow-lg transition-shadow">
+              <Card 
+                key={region.code} 
+                className="p-5 hover:shadow-lg transition-all cursor-pointer hover:border-primary/50 hover:scale-[1.02]"
+                onClick={() => handleRegionClick(region.code)}
+              >
                 <div className="space-y-4">
                   <div className="flex items-start justify-between">
                     <div>
@@ -195,6 +207,10 @@ export default function ExecutiveSummary() {
                         {((region.value / wwTotals.value) * 100).toFixed(1)}%
                       </span>
                     </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-border">
+                    <p className="text-xs text-primary font-medium">Click to view details →</p>
                   </div>
                 </div>
               </Card>
