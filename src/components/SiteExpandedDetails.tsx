@@ -51,15 +51,17 @@ export function SiteExpandedDetails({ site }: SiteExpandedDetailsProps) {
   const totalCostBreakdown = costBreakdown.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <div className="p-6 bg-muted/30">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="p-8 bg-gradient-to-br from-muted/40 to-muted/20 w-full">
+      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
         {/* Group A: General Info & Management */}
-        <Card className="p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <Building2 className="w-4 h-4 text-primary" />
-            <h3 className="font-semibold text-sm text-foreground">Site Details</h3>
+        <Card className="p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Building2 className="w-5 h-5 text-primary" />
+            </div>
+            <h3 className="font-semibold text-foreground">Site Details</h3>
           </div>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-4 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Building Code</span>
               <span className="font-medium text-foreground">{site.buildingCode}</span>
@@ -88,12 +90,14 @@ export function SiteExpandedDetails({ site }: SiteExpandedDetailsProps) {
         </Card>
 
         {/* Group B: Financial Performance */}
-        <Card className="p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <DollarSign className="w-4 h-4 text-primary" />
-            <h3 className="font-semibold text-sm text-foreground">Costs & Budget</h3>
+        <Card className="p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <DollarSign className="w-5 h-5 text-primary" />
+            </div>
+            <h3 className="font-semibold text-foreground">Costs & Budget</h3>
           </div>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-4 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">FY26 AOP</span>
               <span className="font-medium text-foreground">{formatCurrency(site.fy26Projection)}</span>
@@ -135,12 +139,14 @@ export function SiteExpandedDetails({ site }: SiteExpandedDetailsProps) {
         </Card>
 
         {/* Group C: Space & Utilization */}
-        <Card className="p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <Users className="w-4 h-4 text-primary" />
-            <h3 className="font-semibold text-sm text-foreground">Occupancy Metrics</h3>
+        <Card className="p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Users className="w-5 h-5 text-primary" />
+            </div>
+            <h3 className="font-semibold text-foreground">Occupancy Metrics</h3>
           </div>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-4 text-sm">
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Capacity</span>
               <span className="font-medium text-foreground">{site.capacity}</span>
@@ -181,12 +187,14 @@ export function SiteExpandedDetails({ site }: SiteExpandedDetailsProps) {
         </Card>
 
         {/* Group D: Contract & Risk */}
-        <Card className="p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <FileText className="w-4 h-4 text-primary" />
-            <h3 className="font-semibold text-sm text-foreground">Legal & Action Items</h3>
+        <Card className="p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-5">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <FileText className="w-5 h-5 text-primary" />
+            </div>
+            <h3 className="font-semibold text-foreground">Legal & Action Items</h3>
           </div>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-4 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Contract Start</span>
               <span className="font-medium text-foreground">{formatDate(site.contractStartDate)}</span>
