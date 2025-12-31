@@ -314,6 +314,14 @@ export default function SiteDetails() {
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Cost per Employee
+                  </p>
+                  <p className="font-medium text-foreground">
+                    {formatCurrency(site.costPerEmployee)}/mo
+                  </p>
+                </div>
+                <div className="space-y-1 col-span-2">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
                     Potential Savings
                   </p>
                   <p className="font-medium text-green-600">

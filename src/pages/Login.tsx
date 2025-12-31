@@ -157,10 +157,10 @@ export default function LoginScreen() {
                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                  <Globe className="w-5 h-5 text-white" />
                </div>
-               <span className="font-bold text-xl tracking-tight">BudgetMaster 360 AGENT</span>
+               <span className="font-bold text-xl tracking-tight">SiteLense360</span>
              </div>
              <h1 className="text-4xl font-bold leading-tight mb-4">
-               BudgetMaster 360
+               SiteLense360
              </h1>
               <p className="text-slate-300 text-lg">
                 Manage $166M portfolio with real-time AI accountability and 4-tier visibility.

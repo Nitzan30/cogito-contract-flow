@@ -26,7 +26,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="container flex h-16 items-center gap-4">
           <div className="flex items-center gap-2 shrink-0">
             <FileCheck className="h-7 w-7 text-primary" />
-            <h1 className="text-xl font-bold text-foreground hidden sm:block">BudgetMaster 360</h1>
+            <h1 className="text-xl font-bold text-foreground hidden sm:block">SiteLense360</h1>
           </div>
           
           {/* Centered Global Search */}
