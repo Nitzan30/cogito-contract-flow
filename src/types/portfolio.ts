@@ -11,6 +11,7 @@ export interface Site {
   id: string;
   siteName: string;
   address: string;
+  city: string;
   country: string;
   region: Region;
   siteType: SiteType;
@@ -19,13 +20,23 @@ export interface Site {
   adminOwnerName: string;
   adminOwnerEmail: string;
   
+  // General Info & Management
+  buildingCode: string;
+  buildingTypeName: string;
+  unit: string; // GO or BU
+  generalManager: string;
+  siteLeadership: string;
+  
   // Operational metrics
   headcount: number;
   workstations: number;
+  capacity: number;
   attendancePercent: number;
   occupancyPercent: number;
   businessUnit: string;
   utilizationRate: number;
+  rentableArea: number;
+  planonBuildingStatus: string;
   
   // Financials
   realEstateAmount: number;
@@ -36,9 +47,18 @@ export interface Site {
   ehsCost: number;
   totalCost: number;
   costPerEmployee: number;
+  costPerSeat: number;
   fy25Actual: number;
   fy26Projection: number;
   potentialSavings: number;
+  
+  // Contract & Legal
+  contractStartDate: string;
+  contractEndDate: string;
+  notificationDate?: string;
+  regulation?: string;
+  commentsLog?: string;
+  statusSummary?: string;
   
   // Domain tags
   isREFM: boolean;
