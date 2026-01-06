@@ -75,7 +75,7 @@ export default function LoginScreen() {
       const user = USERS_DB.find(u => u.email === email && u.pass === password);
       if (user) {
         setLoggedInUser(user);
-        navigate('/dashboard');
+        navigate('/executive-summary');
       } else {
         setError('Invalid credentials. Please try again.');
         setIsLoading(false);
@@ -92,7 +92,7 @@ export default function LoginScreen() {
         const user = USERS_DB.find(u => u.email === 'nitzan.raich@gmail.com');
         setLoggedInUser(user);
         setSsoStep('idle');
-        navigate('/dashboard');
+        navigate('/executive-summary');
     }, 2500);
   };
 
