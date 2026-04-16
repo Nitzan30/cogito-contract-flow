@@ -17,6 +17,7 @@ import SiteDetails from "./pages/SiteDetails";
 import PortfolioRegion from "./pages/PortfolioRegion";
 import PortfolioSite from "./pages/PortfolioSite";
 import PortfolioSettings from "./pages/PortfolioSettings";
+import AIInsights from "./pages/AIInsights";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/compliance" element={<Compliance />} />
+          <Route path="/ai-insights" element={<AIInsights />} />
           <Route path="/project-plan" element={<ProjectPlan />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
