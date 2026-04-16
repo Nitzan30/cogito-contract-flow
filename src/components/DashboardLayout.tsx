@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Calendar, MapPin, Users } from "lucide-react";
+import { Home, FileText, Bell, BarChart3, Settings, FileCheck, Calendar, MapPin, Users, Brain } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { GlobalSearch } from "@/components/GlobalSearch";
 
@@ -10,6 +10,7 @@ interface DashboardLayoutProps {
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navItems = [
     { to: "/executive-summary", icon: Home, label: "Executive Dashboard" },
+    { to: "/ai-insights", icon: Brain, label: "AI Insights" },
     { to: "/vendor-intelligence", icon: Users, label: "Vendor Intelligence" },
     { to: "/regions", icon: MapPin, label: "Regions" },
     { to: "/contracts", icon: FileText, label: "Contracts" },
