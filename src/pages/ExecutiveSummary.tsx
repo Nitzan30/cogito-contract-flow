@@ -144,6 +144,54 @@ export default function ExecutiveSummary() {
           </Card>
         </div>
 
+        {/* AI Intelligence Strip */}
+        <Card className="p-5 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-primary/20 cursor-pointer hover:shadow-lg transition-all" onClick={() => navigate('/ai-insights')}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Brain className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">AI Intelligence Summary</h3>
+                <p className="text-xs text-muted-foreground">Proactive insights from anomaly detection & predictive analytics</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-destructive" />
+                <div>
+                  <p className="text-lg font-bold text-destructive">{aiDashboardIndicators.anomaliesDetected}</p>
+                  <p className="text-xs text-muted-foreground">Anomalies</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-warning" />
+                <div>
+                  <p className="text-lg font-bold text-warning">{aiDashboardIndicators.predictiveAlerts}</p>
+                  <p className="text-xs text-muted-foreground">Predictions</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-primary" />
+                <div>
+                  <p className="text-lg font-bold text-primary">{aiDashboardIndicators.vendorFlags}</p>
+                  <p className="text-xs text-muted-foreground">Vendor Flags</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-success" />
+                <div>
+                  <p className="text-lg font-bold text-foreground">{aiDashboardIndicators.criticalInsights}</p>
+                  <p className="text-xs text-muted-foreground">Critical</p>
+                </div>
+              </div>
+              <Badge className="bg-primary/10 text-primary border-0 text-xs">
+                View All →
+              </Badge>
+            </div>
+          </div>
+        </Card>
+
         {/* Regional Breakdown - Now Clickable */}
         <div>
           <h3 className="text-xl font-semibold mb-4 text-foreground">Regional Breakdown</h3>
