@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building2, DollarSign, TrendingDown, TrendingUp } from "lucide-react";
+import { Building2, DollarSign, TrendingDown, TrendingUp, Brain, AlertTriangle, Users, Zap } from "lucide-react";
 import { Region } from "@/types/portfolio";
+import { aiDashboardIndicators, mockInsights } from "@/data/mockAIInsights";
 
 const regions: { code: Region; name: string; contracts: number; value: number; expiring: number; compliance: number; fyRemaining: number }[] = [
   { code: "IND", name: "India", contracts: 42, value: 43000000, expiring: 4, compliance: 96, fyRemaining: 17420000 },
