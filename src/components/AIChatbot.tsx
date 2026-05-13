@@ -82,7 +82,7 @@ export function AIChatbot() {
           </div>
           <div>
             <p className="text-sm font-semibold text-foreground">AI Assistant</p>
-            <p className="text-xs text-muted-foreground">SiteLense360</p>
+            <p className="text-xs text-muted-foreground">SiteLens360</p>
           </div>
         </div>
         <div className="flex items-center gap-1">
